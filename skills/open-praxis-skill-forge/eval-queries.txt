@@ -1,0 +1,32 @@
+# praxis-skill-forge 评估查询
+# + 表示应该触发
+# - 表示不应该触发
+
+# 正面测试（应该触发）
++ 创建一个新 skill
++ 帮我创建技能
++ 导入一个外部 skill
++ 评估这个 skill 的质量
++ 检查 skill 是否可以合并
++ 这个 skill 应该拆分吗
++ 如何改进这个 skill 的描述
++ skill 命名规范是什么
++ 如何发布 skill 到 marketplace
++ 检查 skill 的依赖
++ skill 的版本管理
++ 如何验证 skill 的质量
++ skill 的文档应该怎么写
++ 如何测试 skill 的触发词
++ skill 的跨平台兼容性检查
+
+# 负面测试（不应该触发）
+- 翻译这段话
+- 写代码
+- 画个图
+- 压缩图片
+- 今天天气怎么样
+- create a diagram
+- write a function
+- compress this image
+- 帮我写个 PPT
+- 生成一张图片

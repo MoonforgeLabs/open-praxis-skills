@@ -1,0 +1,251 @@
+[
+  {
+    "area": "code-understanding",
+    "title": "AI代码理解工作流：CodeGraph + Understand-Anything 双工具协同重塑",
+    "priority": "P0",
+    "references": [
+      "CodeGraph",
+      "Understand-Anything"
+    ],
+    "tags": [
+      "task",
+      "mainline",
+      "workflow"
+    ]
+  },
+  {
+    "area": "patent-skills",
+    "title": "专利撰写 skill 改造",
+    "priority": "P2",
+    "references": [
+      "mott skills"
+    ],
+    "tags": [
+      "task",
+      "mainline",
+      "skill"
+    ]
+  },
+  {
+    "area": "rag-docs",
+    "title": "RAG 与文档处理 skill 改造",
+    "priority": "P1",
+    "references": [
+      "praxis-document-export",
+      "praxis-diagram",
+      "microsoft/markitdown",
+      "HKUDS/RAG-Anything",
+      "openPencil"
+    ],
+    "tags": [
+      "task",
+      "mainline",
+      "skill",
+      "rag"
+    ]
+  },
+  {
+    "area": "search-skills",
+    "title": "搜索 skill 改造",
+    "priority": "P1",
+    "references": [
+      "praxis-search-hub",
+      "addyosmani/agent-skills"
+    ],
+    "tags": [
+      "task",
+      "mainline",
+      "skill",
+      "search"
+    ]
+  },
+  {
+    "area": "skill-creation",
+    "title": "创建 skill 工作流改造",
+    "priority": "P0",
+    "references": [
+      "praxis-skill-forge",
+      "mott skills",
+      "anthropics/skills"
+    ],
+    "tags": [
+      "task",
+      "mainline",
+      "skill"
+    ],
+    "status": "learned",
+    "completed": [
+      "10 个来源深度内化：mattpocock/skills, anthropics/skills, obra/superpowers, affaan-m/ECC, gsd-build/get-shit-done, ComposioHQ/awesome-claude-skills, hesreallyhim/awesome-claude-code, msitarzewski/agency-agents, mvanhorn/last30days-skill, anysearch-skill",
+      "39 个 reference 文件覆盖：skill architecture, description format, verification patterns, hook patterns, eval methodology, role templates, research patterns, runtime config, knowledge architecture, workspace audit, package management, design gate, skill writing TDD, persuasion principles, git workflow, naming validation, marketplace registration, eval advanced, sprawl detection, load theory 等",
+      "9 个工具脚本：quick_validate.py (验证), eval_runner.py (触发率测试), improve_description.py (LLM 优化), package_skill.py (打包), link-skills.sh (安装), doctor.sh (诊断修复), bump-version.sh (版本管理), auto_classify_tiers.py (分层), install_skill.sh (单 skill 安装)",
+      "三版本命名体系：alex- (个人), alex-org- (内部 GitLab), alex-pub- (公开 GitHub)",
+      "改名：alex-skill-curator → praxis-skill-forge，全部引用同步更新"
+    ],
+    "remaining": [
+      "CI/CD 集成：GitHub Actions 跑 quick_validate + eval_runner（可选）",
+      "Shell lint (lint-shell.sh)：ShellCheck 检查 scripts/*.sh（可选）",
+      "Dashboard：skill 健康仪表盘（可选，按需加）"
+    ],
+    "reference_state": {
+      "praxis-skill-forge": {
+        "last_checked": "2026-06-27",
+        "version": "1.0",
+        "capabilities": ["validate", "package", "install", "eval", "description-improve", "doctor", "bump-version", "auto-classify"]
+      },
+      "anthropics/skills": {
+        "last_checked": "2026-06-27",
+        "stars": 155646,
+        "last_updated": "2026-06-27T06:09:11Z",
+        "capabilities": ["create", "validate", "package"]
+      }
+    }
+  },
+  {
+    "area": "daily-news",
+    "title": "每日新闻与监控 skill 改造",
+    "priority": "P1",
+    "references": [
+      "praxis-github-watchtower",
+      "praxis-agent-reach-ops",
+      "praxis-news-aggregator",
+      "praxis-youtube-clipper",
+      "moonforge-intake"
+    ],
+    "tags": [
+      "task",
+      "mainline",
+      "monitoring",
+      "news"
+    ]
+  },
+  {
+    "area": "ai-os",
+    "title": "个人 AI OS 改造",
+    "priority": "P0",
+    "references": [
+      "moonforge",
+      "deerflow",
+      "tauri",
+      "OpenHarness",
+      "fay",
+      "openapi",
+      "IBM cuga",
+      "Omnigent",
+      "everOs",
+      "ollama/ollama"
+    ],
+    "tags": [
+      "task",
+      "mainline",
+      "moonforge",
+      "ai-os"
+    ]
+  },
+  {
+    "area": "knowledge-base",
+    "title": "个人知识库改造",
+    "priority": "P2",
+    "references": [
+      "awesome-architecture"
+    ],
+    "tags": [
+      "task",
+      "mainline",
+      "knowledge-base"
+    ]
+  },
+  {
+    "area": "skill-ecosystem",
+    "title": "有用 skill 生态整合",
+    "priority": "P2",
+    "references": [
+      "addyosmani/agent-skills",
+      "mott skills",
+      "superpowers",
+      "ECC"
+    ],
+    "tags": [
+      "task",
+      "mainline",
+      "skill",
+      "ecosystem"
+    ]
+  },
+  {
+    "area": "business-skills",
+    "title": "business skill 改造：短视频、小红书与业务工作流",
+    "priority": "P3",
+    "references": [
+      "bytedance/UI-TARS-desktop",
+      "Open-Generative-AI",
+      "Pixelle",
+      "FinceptTerminal",
+      "calesthio/OpenMontage"
+    ],
+    "tags": [
+      "task",
+      "mainline",
+      "business",
+      "media"
+    ]
+  },
+  {
+    "area": "stocks",
+    "title": "股票类型处理工作流",
+    "priority": "P3",
+    "references": [
+      "TradingAgents"
+    ],
+    "tags": [
+      "task",
+      "mainline",
+      "stocks",
+      "trading"
+    ]
+  },
+  {
+    "area": "design-tools",
+    "title": "AI 设计工具生态整合",
+    "priority": "P1",
+    "references": [
+      "claude-design",
+      "UI-TARS-desktop",
+      "Codex-Product-Design"
+    ],
+    "tags": [
+      "task",
+      "mainline",
+      "design",
+      "tools"
+    ]
+  },
+  {
+    "area": "digital-human",
+    "title": "数字人与虚拟形象",
+    "priority": "P2",
+    "references": [
+      "Fay",
+      "OpenTalking"
+    ],
+    "tags": [
+      "task",
+      "mainline",
+      "digital-human",
+      "agent"
+    ]
+  },
+  {
+    "area": "content-distribution",
+    "title": "多平台内容分发工作流",
+    "priority": "P3",
+    "references": [
+      "ai-marketing-agent"
+    ],
+    "tags": [
+      "task",
+      "mainline",
+      "content",
+      "distribution"
+    ]
+  }
+]

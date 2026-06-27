@@ -1,0 +1,3 @@
+display_name: Document Export
+short_description: Export authorized webpages, PDFs, screenshots, and images to local Markdown packages.
+default_prompt: Export this authorized document into a local package with full text, images/assets, metadata, and a Markdown file suitable for learning or PixelRAG indexing.
