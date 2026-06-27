@@ -1,5 +1,5 @@
 ---
-name: open-praxis-ai-usage-stats
+name: praxis-ai-usage-stats
 description: >
   统计所有 AI agent runtime（Claude Code、Codex、OpenHuman 等）
   的 skill/agent/tool 使用情况。支持实时捕获、SQLite 持久化、
