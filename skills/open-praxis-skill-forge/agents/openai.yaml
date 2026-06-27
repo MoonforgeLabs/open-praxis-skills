@@ -1,4 +1,0 @@
-interface:
-  display_name: "Alex Skill Curator"
-  short_description: "Curate and absorb external skills into praxis-skills safely."
-  default_prompt: "Help me evaluate external skills and absorb suitable ones into praxis-skills."

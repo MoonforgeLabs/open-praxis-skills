@@ -1,0 +1,3 @@
+source: ~/.claude/hooks/log-tool-usage.sh
+backup_date: 2026-06-25
+description: Claude Code PreToolUse hook，记录 Skill/Agent/Workflow/MCP 调用到 tool-usage.log

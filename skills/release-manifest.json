@@ -1,0 +1,14 @@
+{
+  "_comment": "Skills approved for downstream repos. Only sync these.",
+  "_updated": "2026-06-27",
+  "approved": {
+    "open-praxis-ai-usage-stats": {
+      "approved_by": "praxis-skill-publish",
+      "date": "2026-06-27",
+      "tier": "A",
+      "notes": "100% CORE, zero external deps, ready to ship"
+    }
+  },
+  "pending": [],
+  "private_only": []
+}

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Moonforge Review"
-  short_description: "Run weekly and monthly Moonforge reviews."
-  default_prompt: "Help me run my Moonforge weekly or monthly review."

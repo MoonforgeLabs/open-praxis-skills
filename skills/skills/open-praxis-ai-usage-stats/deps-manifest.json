@@ -1,0 +1,23 @@
+{
+  "name": "praxis-ai-usage-stats",
+  "version": "1.0.0",
+  "tiers": {
+    "CORE": {
+      "description": "Pure Python stdlib, zero external deps",
+      "commands": ["stats", "report", "web", "migrate", "cleanup", "hook-install", "hook-collect", "check-deps", "log"],
+      "deps": {
+        "python": ">=3.10",
+        "pip": [],
+        "npm": [],
+        "system": []
+      },
+      "platforms": ["macos", "linux", "windows"],
+      "notes": "SQLite is part of Python stdlib. Web dashboard uses Python's built-in http.server."
+    }
+  },
+  "open_source_trim": {
+    "keep": ["CORE"],
+    "remove": [],
+    "result": "9/9 commands, zero external deps, ready to ship"
+  }
+}
