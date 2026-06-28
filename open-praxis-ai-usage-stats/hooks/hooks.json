@@ -1,0 +1,16 @@
+{
+    "hooks": {
+        "PostToolUse": [
+            {
+                "matcher": "Skill|Bash|Read|Write|Edit|Agent",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "python3 ~/.codex/skills/open-praxis-ai-usage-stats/scripts/hook_collect.py || true",
+                        "async": false
+                    }
+                ]
+            }
+        ]
+    }
+}
