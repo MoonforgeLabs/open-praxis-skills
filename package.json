@@ -1,12 +1,12 @@
 {
-  "name": "praxis-skills",
-  "version": "0.1.0",
+  "name": "open-praxis-skills",
+  "version": "0.2.0",
   "type": "module",
-  "description": "Portable skill collection for AI coding agents",
+  "description": "Open source skills for AI coding agents",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MoonforgeLabs/praxis-skills.git"
+    "url": "https://github.com/MoonforgeLabs/open-praxis-skills.git"
   },
   "scripts": {
     "list": "ls skills/",

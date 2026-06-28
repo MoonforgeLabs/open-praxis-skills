@@ -1,12 +1,18 @@
 {
   "_comment": "Skills approved for downstream repos. Only sync these.",
-  "_updated": "2026-06-26",
+  "_updated": "2026-06-28",
   "approved": {
     "praxis-ai-usage-stats": {
       "approved_by": "praxis-skill-publish",
       "date": "2026-06-26",
       "tier": "A",
       "notes": "100% CORE, zero external deps, ready to ship"
+    },
+    "praxis-knowledge-radar": {
+      "approved_by": "praxis-skill-publish",
+      "date": "2026-06-28",
+      "tier": "A",
+      "notes": "个人知识线索追踪器，支持多源输入、状态流转、能力同步"
     }
   },
   "pending": [
@@ -25,7 +31,6 @@
     "praxis-agent-reach-ops",
     "praxis-asset-governance",
     "praxis-github-watchtower",
-    "praxis-knowledge-radar",
     "praxis-personal-monitor",
     "moonforge-os-monitor",
     "moonforge-review",
