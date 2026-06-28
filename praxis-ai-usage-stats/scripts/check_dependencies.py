@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""检查 open-praxis-ai-usage-stats 的依赖状态
+"""检查 praxis-ai-usage-stats 的依赖状态
 
 用法:
     python3 check_dependencies.py           # 检查所有依赖
@@ -37,7 +37,7 @@ def check_hook_config(runtime: str) -> Dict[str, Any]:
             return {"status": "error", "detail": f"读取配置失败: {e}"}
 
     elif runtime == "codex":
-        hooks_path = Path.home() / ".codex" / "skills" / "open-praxis-ai-usage-stats" / "hooks" / "hooks.json"
+        hooks_path = Path.home() / ".codex" / "skills" / "praxis-ai-usage-stats" / "hooks" / "hooks.json"
         if hooks_path.exists():
             return {"status": "ok", "detail": "Codex hooks 配置已存在"}
         else:
@@ -52,9 +52,9 @@ def check_hook_config(runtime: str) -> Dict[str, Any]:
 def check_symlink(runtime: str) -> Dict[str, Any]:
     """检查软连接"""
     skill_dirs = {
-        "claude": Path.home() / ".claude" / "skills" / "open-praxis-ai-usage-stats",
-        "codex": Path.home() / ".codex" / "skills" / "open-praxis-ai-usage-stats",
-        "openhuman": Path.home() / ".openhuman" / "skills" / "open-praxis-ai-usage-stats",
+        "claude": Path.home() / ".claude" / "skills" / "praxis-ai-usage-stats",
+        "codex": Path.home() / ".codex" / "skills" / "praxis-ai-usage-stats",
+        "openhuman": Path.home() / ".openhuman" / "skills" / "praxis-ai-usage-stats",
     }
 
     skill_dir = skill_dirs.get(runtime)
@@ -82,7 +82,7 @@ def check_database() -> Dict[str, Any]:
 
 def check_scripts() -> Dict[str, Any]:
     """检查脚本权限"""
-    scripts_dir = Path.home() / ".claude" / "skills" / "open-praxis-ai-usage-stats" / "scripts"
+    scripts_dir = Path.home() / ".claude" / "skills" / "praxis-ai-usage-stats" / "scripts"
     if not scripts_dir.exists():
         return {"status": "missing", "detail": "scripts 目录不存在"}
 
@@ -130,7 +130,7 @@ def check_all_dependencies() -> Dict[str, Dict[str, Any]]:
 def print_report(results: Dict[str, Dict[str, Any]]):
     """打印检查报告"""
     print("=" * 60)
-    print("📊 open-praxis-ai-usage-stats 依赖检查报告")
+    print("📊 praxis-ai-usage-stats 依赖检查报告")
     print("=" * 60)
     print()
 
@@ -207,11 +207,11 @@ def print_fix_instructions(results: Dict[str, Dict[str, Any]]):
                 has_missing = True
 
             skill_dirs = {
-                "claude": "~/.claude/skills/open-praxis-ai-usage-stats",
-                "codex": "~/.codex/skills/open-praxis-ai-usage-stats",
-                "openhuman": "~/.openhuman/skills/open-praxis-ai-usage-stats",
+                "claude": "~/.claude/skills/praxis-ai-usage-stats",
+                "codex": "~/.codex/skills/praxis-ai-usage-stats",
+                "openhuman": "~/.openhuman/skills/praxis-ai-usage-stats",
             }
-            print(f"   ln -s /path/to/open-praxis-ai-usage-stats {skill_dirs[runtime]}")
+            print(f"   ln -s /path/to/praxis-ai-usage-stats {skill_dirs[runtime]}")
 
     # 检查是否需要配置 hook
     for runtime in ["claude", "codex"]:
@@ -223,11 +223,11 @@ def print_fix_instructions(results: Dict[str, Dict[str, Any]]):
 
             if runtime == "claude":
                 print("2. 配置 Claude Code hook:")
-                print("   python3 ~/.claude/skills/open-praxis-ai-usage-stats/scripts/hook_install.py install")
+                print("   python3 ~/.claude/skills/praxis-ai-usage-stats/scripts/hook_install.py install")
                 print()
             elif runtime == "codex":
                 print("3. 配置 Codex hook:")
-                print("   创建 ~/.codex/skills/open-praxis-ai-usage-stats/hooks/hooks.json")
+                print("   创建 ~/.codex/skills/praxis-ai-usage-stats/hooks/hooks.json")
                 print()
 
     if not has_missing:

@@ -1,5 +1,5 @@
 ---
-name: open-praxis-ai-usage-stats
+name: praxis-ai-usage-stats
 description: >
   Use when the user asks about AI usage statistics, tool stats, skill rankings,
   or cost tracking. Captures tool/skill/agent calls across Claude Code, Codex,

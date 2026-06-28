@@ -1,10 +1,10 @@
 #!/bin/bash
-# open-praxis-ai-usage-stats 安装脚本
+# praxis-ai-usage-stats 安装脚本
 # 使用软连接方式安装到 Claude Code 和 Codex
 
 set -e
 
-SKILL_NAME="open-praxis-ai-usage-stats"
+SKILL_NAME="praxis-ai-usage-stats"
 SKILL_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 
 echo "📦 安装 $SKILL_NAME"
@@ -66,7 +66,7 @@ if [ ! -f "$CODEX_HOOKS_FILE" ]; then
                 "hooks": [
                     {
                         "type": "command",
-                        "command": "python3 ~/.codex/skills/open-praxis-ai-usage-stats/scripts/hook_collect.py || true",
+                        "command": "python3 ~/.codex/skills/praxis-ai-usage-stats/scripts/hook_collect.py || true",
                         "async": false
                     }
                 ]

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-open-praxis-ai-usage-stats 跨平台安装脚本
+praxis-ai-usage-stats 跨平台安装脚本
 
 支持: macOS, Linux, Windows
 
@@ -21,7 +21,7 @@ from typing import Dict, List, Optional
 
 
 # 配置
-SKILL_NAME = "open-praxis-ai-usage-stats"
+SKILL_NAME = "praxis-ai-usage-stats"
 SKILL_DIR = Path(__file__).parent.parent.resolve()
 
 # Runtime 配置
@@ -257,7 +257,7 @@ def check_dependencies() -> Dict[str, bool]:
 def print_check_report(results: Dict[str, bool]):
     """打印检查报告"""
     print("\n" + "=" * 60)
-    print("📊 open-praxis-ai-usage-stats 依赖检查报告")
+    print("📊 praxis-ai-usage-stats 依赖检查报告")
     print("=" * 60)
 
     print("\n【软连接】")
