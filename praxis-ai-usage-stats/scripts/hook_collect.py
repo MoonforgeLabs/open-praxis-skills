@@ -33,19 +33,32 @@ except ImportError:
 
 # 模型费率 (per 1M tokens)
 MODEL_RATES = {
+    # Claude 3.5 系列
     "claude-3-5-sonnet": {"input": 3.0, "output": 15.0, "cache_read": 0.3},
     "claude-3-5-haiku": {"input": 0.8, "output": 4.0, "cache_read": 0.08},
+    # Claude 3 系列
     "claude-3-opus": {"input": 15.0, "output": 75.0, "cache_read": 1.5},
     "claude-3-haiku": {"input": 0.25, "output": 1.25, "cache_read": 0.03},
     "claude-3-sonnet": {"input": 3.0, "output": 15.0, "cache_read": 0.3},
+    # Claude 4 系列 (pa/ 前缀是代理服务)
+    "claude-opus-4": {"input": 15.0, "output": 75.0, "cache_read": 1.5},
+    "claude-sonnet-4": {"input": 3.0, "output": 15.0, "cache_read": 0.3},
+    "claude-haiku-4": {"input": 0.8, "output": 4.0, "cache_read": 0.08},
+    # GPT 系列
     "gpt-4": {"input": 30.0, "output": 60.0, "cache_read": 0.0},
     "gpt-4-turbo": {"input": 10.0, "output": 30.0, "cache_read": 0.0},
     "gpt-4o": {"input": 5.0, "output": 15.0, "cache_read": 0.0},
     "gpt-4o-mini": {"input": 0.15, "output": 0.6, "cache_read": 0.0},
     "gpt-3.5-turbo": {"input": 0.5, "output": 1.5, "cache_read": 0.0},
+    # 本地模型 (免费)
+    "ollama": {"input": 0.0, "output": 0.0, "cache_read": 0.0},
+    "llama": {"input": 0.0, "output": 0.0, "cache_read": 0.0},
+    "mistral": {"input": 0.0, "output": 0.0, "cache_read": 0.0},
+    "qwen": {"input": 0.0, "output": 0.0, "cache_read": 0.0},
+    "deepseek": {"input": 0.0, "output": 0.0, "cache_read": 0.0},
 }
 
-# 默认费率
+# 默认费率 (用于未知模型)
 DEFAULT_RATE = {"input": 3.0, "output": 15.0, "cache_read": 0.3}
 
 
@@ -97,17 +110,62 @@ def get_skill_name(tool_input: dict) -> str:
     return "unknown"
 
 
+def match_model_rate(model: str) -> dict:
+    """匹配模型费率，支持多种模型名格式
+
+    支持的格式：
+    - claude-3-5-sonnet-20241022
+    - pa/claude-opus-4-6 (代理服务)
+    - mimo-v2.5-pro (自定义模型)
+    - ollama/llama3 (本地模型)
+    """
+    if not model:
+        return DEFAULT_RATE
+
+    model_lower = model.lower().strip()
+
+    # 移除代理服务前缀 (pa/, proxy/, api/ 等)
+    prefixes_to_remove = ['pa/', 'proxy/', 'api/', 'openai/', 'anthropic/']
+    for prefix in prefixes_to_remove:
+        if model_lower.startswith(prefix):
+            model_lower = model_lower[len(prefix):]
+            break
+
+    # 移除版本号后缀 (如 -20241022, -v1, -latest)
+    import re
+    model_lower = re.sub(r'-\d{8}$', '', model_lower)  # 移除日期后缀
+    model_lower = re.sub(r'-v\d+$', '', model_lower)    # 移除版本号
+    model_lower = re.sub(r'-latest$', '', model_lower)  # 移除 latest
+
+    # 精确匹配优先
+    if model_lower in MODEL_RATES:
+        return MODEL_RATES[model_lower]
+
+    # 模糊匹配 (子字符串匹配)
+    for model_prefix, model_rate in MODEL_RATES.items():
+        if model_prefix in model_lower:
+            return model_rate
+
+    # 特殊处理：检查是否包含关键词
+    model_keywords = {
+        'opus': MODEL_RATES.get('claude-3-opus', DEFAULT_RATE),
+        'sonnet': MODEL_RATES.get('claude-3-5-sonnet', DEFAULT_RATE),
+        'haiku': MODEL_RATES.get('claude-3-5-haiku', DEFAULT_RATE),
+        'gpt-4o': MODEL_RATES.get('gpt-4o', DEFAULT_RATE),
+        'gpt-4': MODEL_RATES.get('gpt-4', DEFAULT_RATE),
+    }
+
+    for keyword, rate in model_keywords.items():
+        if keyword in model_lower:
+            return rate
+
+    return DEFAULT_RATE
+
+
 def calculate_cost(tokens_in: int, tokens_out: int,
                    cache_read: int, model: str) -> float:
     """根据模型和 token 数量计算成本"""
-    # 匹配模型
-    rate = DEFAULT_RATE
-    model_lower = model.lower()
-
-    for model_prefix, model_rate in MODEL_RATES.items():
-        if model_prefix in model_lower:
-            rate = model_rate
-            break
+    rate = match_model_rate(model)
 
     # 计算成本 (per 1M tokens)
     cost = (
