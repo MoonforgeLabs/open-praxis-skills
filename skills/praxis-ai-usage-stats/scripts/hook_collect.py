@@ -33,21 +33,15 @@ except ImportError:
 
 # 模型费率 (per 1M tokens)
 MODEL_RATES = {
-    # Claude 3.5 系列
+    # Claude 系列
     "claude-3-5-sonnet": {"input": 3.0, "output": 15.0, "cache_read": 0.3},
     "claude-3-5-haiku": {"input": 0.8, "output": 4.0, "cache_read": 0.08},
-    # Claude 3 系列
     "claude-3-opus": {"input": 15.0, "output": 75.0, "cache_read": 1.5},
     "claude-3-haiku": {"input": 0.25, "output": 1.25, "cache_read": 0.03},
     "claude-3-sonnet": {"input": 3.0, "output": 15.0, "cache_read": 0.3},
-    # Claude 4 系列 (pa/ 前缀是代理服务)
     "claude-opus-4": {"input": 15.0, "output": 75.0, "cache_read": 1.5},
     "claude-sonnet-4": {"input": 3.0, "output": 15.0, "cache_read": 0.3},
     "claude-haiku-4": {"input": 0.8, "output": 4.0, "cache_read": 0.08},
-    # Xiaomi MiMo 系列
-    "mimo-v2.5-pro": {"input": 0.435, "output": 0.87, "cache_read": 0.044},
-    "mimo-v2.5": {"input": 0.105, "output": 0.28, "cache_read": 0.01},
-    "mimo": {"input": 0.435, "output": 0.87, "cache_read": 0.044},
     # GPT 系列
     "gpt-5.5": {"input": 5.0, "output": 30.0, "cache_read": 0.5},
     "gpt-5": {"input": 2.5, "output": 15.0, "cache_read": 0.25},
@@ -115,16 +109,20 @@ def match_model_rate(model: str) -> dict:
 
     支持的格式：
     - claude-3-5-sonnet-20241022
-    - pa/claude-opus-4-6 (代理服务)
-    - mimo-v2.5-pro (自定义模型)
+    - gpt-5.5
     """
     if not model:
         return DEFAULT_RATE
 
     model_lower = model.lower().strip()
 
-    # 移除代理服务前缀 (pa/, proxy/, api/ 等)
-    prefixes_to_remove = ['pa/', 'proxy/', 'api/', 'openai/', 'anthropic/']
+    # 移除代理服务前缀 (proxy/, api/ 等)
+    prefixes_to_remove = ['proxy/', 'api/', 'openai/', 'anthropic/']
+    for prefix in prefixes_to_remove:
+        while model_lower.startswith(prefix):
+            model_lower = model_lower[len(prefix):]
+
+    # 移除版本号后缀 (如 -20241022, -v1, -latest)
     for prefix in prefixes_to_remove:
         while model_lower.startswith(prefix):
             model_lower = model_lower[len(prefix):]
