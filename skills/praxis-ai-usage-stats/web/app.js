@@ -41,7 +41,7 @@ class UsageStatsApp {
         const now = new Date();
         const events = [];
         const kinds = ['skill', 'agent', 'tool'];
-        const runtimes = ['claude', 'codex', 'openhuman'];
+        const runtimes = ['claude', 'codex'];
         const skills = ['alex-translate', 'alex-diagram', 'alex-format-markdown', 'alex-image-gen', 'alex-compress-image'];
         const tools = ['Read', 'Write', 'Bash', 'Grep', 'Agent'];
 
