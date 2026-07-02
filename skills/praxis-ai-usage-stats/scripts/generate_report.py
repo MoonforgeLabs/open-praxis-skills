@@ -181,8 +181,6 @@ def generate_interactive_html(data: Dict[str, Any]) -> str:
                     <option value="all">全部 Runtime</option>
                     <option value="claude">Claude Code</option>
                     <option value="codex">Codex</option>
-                    <option value="openhuman">OpenHuman</option>
-                    <option value="ollama">Ollama</option>
                 </select>
             </div>
             <div class="filter-group">
@@ -256,7 +254,6 @@ def generate_interactive_html(data: Dict[str, Any]) -> str:
                 <tr style="border-bottom:1px solid #eee;"><td style="padding:6px;">GPT-5</td><td style="padding:6px;text-align:right;">$2.50</td><td style="padding:6px;text-align:right;">$15.00</td><td style="padding:6px;text-align:right;">$0.25</td><td style="padding:6px;color:#888;">OpenAI 官价</td></tr>
                 <tr style="border-bottom:1px solid #eee;"><td style="padding:6px;">GPT-4o</td><td style="padding:6px;text-align:right;">$5.00</td><td style="padding:6px;text-align:right;">$15.00</td><td style="padding:6px;text-align:right;">-</td><td style="padding:6px;color:#888;">OpenAI 官价</td></tr>
                 <tr style="border-bottom:1px solid #eee;"><td style="padding:6px;">GPT-4o-mini</td><td style="padding:6px;text-align:right;">$0.15</td><td style="padding:6px;text-align:right;">$0.60</td><td style="padding:6px;text-align:right;">-</td><td style="padding:6px;color:#888;">OpenAI 官价</td></tr>
-                <tr style="border-bottom:1px solid #eee;"><td style="padding:6px;">Ollama / 本地模型</td><td style="padding:6px;text-align:right;">$0.00</td><td style="padding:6px;text-align:right;">$0.00</td><td style="padding:6px;text-align:right;">$0.00</td><td style="padding:6px;color:#888;">本地免费</td></tr>
             </table>
             <p style="color:#888;font-size:12px;margin-top:8px;">💡 费用 = (input_tokens × input_rate + output_tokens × output_rate + cache_read_tokens × cache_rate) ÷ 1,000,000</p>
             <p style="color:#888;font-size:12px;">⚠️ ppio 等代理服务的实际价格可能与官价不同，上表为 OpenAI/Anthropic 官方定价</p>

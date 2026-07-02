@@ -51,19 +51,11 @@ MODEL_RATES = {
     # GPT 系列
     "gpt-5.5": {"input": 5.0, "output": 30.0, "cache_read": 0.5},
     "gpt-5": {"input": 2.5, "output": 15.0, "cache_read": 0.25},
-    # ppio 代理服务（实际按 GPT-5 费率计费，非 GPT-5.5 官价）
-    "ppio/": {"input": 2.5, "output": 15.0, "cache_read": 0.25},
     "gpt-4": {"input": 30.0, "output": 60.0, "cache_read": 0.0},
     "gpt-4-turbo": {"input": 10.0, "output": 30.0, "cache_read": 0.0},
     "gpt-4o": {"input": 5.0, "output": 15.0, "cache_read": 0.0},
     "gpt-4o-mini": {"input": 0.15, "output": 0.6, "cache_read": 0.0},
     "gpt-3.5-turbo": {"input": 0.5, "output": 1.5, "cache_read": 0.0},
-    # 本地模型 (免费)
-    "ollama": {"input": 0.0, "output": 0.0, "cache_read": 0.0},
-    "llama": {"input": 0.0, "output": 0.0, "cache_read": 0.0},
-    "mistral": {"input": 0.0, "output": 0.0, "cache_read": 0.0},
-    "qwen": {"input": 0.0, "output": 0.0, "cache_read": 0.0},
-    "deepseek": {"input": 0.0, "output": 0.0, "cache_read": 0.0},
 }
 
 # 默认费率 (用于未知模型)
@@ -125,19 +117,14 @@ def match_model_rate(model: str) -> dict:
     - claude-3-5-sonnet-20241022
     - pa/claude-opus-4-6 (代理服务)
     - mimo-v2.5-pro (自定义模型)
-    - ollama/llama3 (本地模型)
     """
     if not model:
         return DEFAULT_RATE
 
     model_lower = model.lower().strip()
 
-    # ppio 代理服务特殊处理（实际按 GPT-5 费率，非官价）
-    if 'ppio/' in model_lower:
-        return MODEL_RATES.get('ppio/', DEFAULT_RATE)
-
-    # 移除代理服务前缀 (pa/, proxy/, api/, ppio/ 等)
-    prefixes_to_remove = ['ppio/', 'pa/', 'proxy/', 'api/', 'openai/', 'anthropic/']
+    # 移除代理服务前缀 (pa/, proxy/, api/ 等)
+    prefixes_to_remove = ['pa/', 'proxy/', 'api/', 'openai/', 'anthropic/']
     for prefix in prefixes_to_remove:
         while model_lower.startswith(prefix):
             model_lower = model_lower[len(prefix):]

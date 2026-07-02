@@ -2,8 +2,8 @@
 name: praxis-ai-usage-stats
 description: >
   Use when the user asks about AI usage statistics, tool stats, skill rankings,
-  or cost tracking. Captures tool/skill/agent calls across Claude Code, Codex,
-  and OpenHuman with SQLite persistence, token stats, cost estimation, and web dashboard.
+  or cost tracking. Captures tool/skill/agent calls across Claude Code and Codex
+  with SQLite persistence, token stats, cost estimation, and web dashboard.
   触发词："使用统计"、"usage stats"、"工具统计"、"tool stats"、"用了什么"、"skill 排行"、"agent 统计"。
 metadata:
   distribution:
@@ -30,7 +30,7 @@ metadata:
 
 - 查看 AI agent 的使用统计（"用了什么工具"、"skill 排行"）
 - 追踪 Token 消耗和成本估算
-- 分析跨 runtime（Claude Code / Codex / OpenHuman）的使用趋势
+- 分析跨 runtime（Claude Code / Codex）的使用趋势
 - 生成使用报告或 Web 仪表盘
 
 ## When NOT to Use
@@ -79,7 +79,6 @@ python3 scripts/usage_stats.py --web
 | Claude Code | `~/.claude/tool-usage.log`（hook 自动记录） |
 | Claude Code | `~/.claude/projects/**/*.jsonl`（会话 tool_use） |
 | Codex | `~/.codex/skill-usage.log`、`tool-usage.log` |
-| OpenHuman | `~/.openhuman/users/*/workspace/session_raw/*.jsonl` |
 
 ## Hook 工作原理
 
@@ -109,7 +108,6 @@ MODEL_RATES = {
     # GPT 系列
     "gpt-4o": {"input": 5.0, "output": 15.0, "cache_read": 0.0},
     # 本地模型 (免费)
-    "ollama": {"input": 0.0, "output": 0.0, "cache_read": 0.0},
     "llama": {"input": 0.0, "output": 0.0, "cache_read": 0.0},
 }
 ```
@@ -117,11 +115,9 @@ MODEL_RATES = {
 **模型名格式支持**：
 - 标准格式：`claude-3-5-sonnet-20241022`
 - 代理服务：`pa/claude-opus-4-6`（自动移除 `pa/` 前缀）
-- 本地模型：`ollama/llama3`、`mimo-v2.5-pro`（匹配关键词）
 
 **计费说明**：
 - 费用单位：美元/百万 tokens
-- 本地模型（Ollama、Llama、Mistral 等）费用为 0
 - 未知模型使用默认费率（$3/15/0.3 per 1M tokens）
 - 详细计费规则和示例请参考 [计费指南](references/billing-guide.md)
 
