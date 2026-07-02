@@ -318,7 +318,12 @@ def parse_codex_active_logs(since: datetime) -> List[Dict[str, Any]]:
 
 
 def parse_codex_sessions(since: datetime) -> List[Dict[str, Any]]:
-    """解析 ~/.codex/sessions and archived_sessions"""
+    """解析 ~/.codex/sessions and archived_sessions
+
+    从 session JSONL 中提取：
+    - function_call / mcp_tool_call_end 事件（工具调用记录）
+    - event_msg 中的 payload.info.last_token_usage（token 用量）
+    """
     records = []
     session_dirs = [
         Path.home() / ".codex" / "sessions",
@@ -340,6 +345,9 @@ def parse_codex_sessions(since: datetime) -> List[Dict[str, Any]]:
             session_id = jsonl_file.stem
             cwd = ""
             current_model = ""
+            # 跟踪上次的累计 token，用于计算增量
+            prev_total_in = 0
+            prev_total_out = 0
 
             try:
                 for line in jsonl_file.open(encoding='utf-8'):
@@ -361,6 +369,39 @@ def parse_codex_sessions(since: datetime) -> List[Dict[str, Any]]:
                         current_model = str(p.get("model") or current_model)
 
                     ts_str = d.get("timestamp", "")
+
+                    # 提取 token 用量（event_msg 中的 payload.info）
+                    if d.get("type") == "event_msg":
+                        info = p.get("info", {})
+                        if isinstance(info, dict):
+                            usage = info.get("last_token_usage", {})
+                            if isinstance(usage, dict) and usage.get("input_tokens", 0) > 0:
+                                ts = parse_timestamp(ts_str)
+                                if ts and ts >= since:
+                                    tokens_in = usage.get("input_tokens", 0)
+                                    tokens_out = usage.get("output_tokens", 0)
+                                    cache_read = usage.get("cached_input_tokens", 0)
+                                    # 计算费用
+                                    from hook_collect import calculate_cost
+                                    cost = calculate_cost(tokens_in, tokens_out, cache_read, current_model)
+                                    records.append({
+                                        "ts": ts.isoformat(),
+                                        "runtime": "codex",
+                                        "kind": "tool",
+                                        "name": "api-inference",
+                                        "project": cwd,
+                                        "model": current_model,
+                                        "context": "",
+                                        "tokens_in": tokens_in,
+                                        "tokens_out": tokens_out,
+                                        "cache_read": cache_read,
+                                        "cache_creation": 0,
+                                        "latency_ms": info.get("time_to_first_token_ms", 0),
+                                        "cost_usd": cost,
+                                        "outcome": "success",
+                                        "triggered_by": "",
+                                        "session_id": session_id,
+                                    })
 
                     # function_call events
                     if "name" in p and p.get("type") == "function_call":
@@ -517,21 +558,31 @@ def parse_openhuman_sessions(since: datetime) -> List[Dict[str, Any]]:
                     session_ts = parse_timestamp(str(meta.get("created") or ""))
                     session_agent = str(meta.get("agent") or "orchestrator")
                     if session_ts and session_ts >= since:
+                        # 提取 token 用量
+                        tokens_in = meta.get("input_tokens", 0) or 0
+                        tokens_out = meta.get("output_tokens", 0) or 0
+                        cache_read = meta.get("cached_input_tokens", 0) or 0
+                        session_model = str(meta.get("model") or "")
+
+                        # 计算费用
+                        from hook_collect import calculate_cost
+                        cost = calculate_cost(tokens_in, tokens_out, cache_read, session_model) if tokens_in > 0 else 0.0
+
                         records.append({
                             "ts": session_ts.isoformat(),
                             "runtime": "openhuman",
                             "kind": classify_tool(session_agent, "agent"),
                             "name": session_agent,
                             "project": project,
-                            "model": "",
+                            "model": session_model,
                             "context": "session",
-                            "tokens_in": 0,
-                            "tokens_out": 0,
-                            "cache_read": 0,
+                            "tokens_in": tokens_in,
+                            "tokens_out": tokens_out,
+                            "cache_read": cache_read,
                             "cache_creation": 0,
                             "latency_ms": 0,
-                            "cost_usd": 0.0,
-                            "outcome": "unknown",
+                            "cost_usd": cost,
+                            "outcome": "success" if tokens_in > 0 else "unknown",
                             "triggered_by": "",
                             "session_id": session_id,
                         })
