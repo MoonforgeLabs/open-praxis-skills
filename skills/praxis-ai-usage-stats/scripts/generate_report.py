@@ -96,14 +96,21 @@ def main():
         output_path = output_dir / f"report_{timestamp}.html"
 
     output_path.write_text(html, encoding="utf-8")
-    print(f"✅ 报告已生成: {output_path}")
-    print(f"📊 包含 {len(all_events)} 条事件")
-    print(f"💡 直接双击打开，无需服务器")
+    print(f"[OK] Report generated: {output_path}")
+    print(f"[INFO] Contains {len(all_events)} events")
+    print(f"[TIP] Double-click to open, no server needed")
 
     # 自动打开浏览器
     if config["open"]:
-        webbrowser.open(f"file://{output_path}")
-        print("🌐 已在浏览器中打开")
+        import platform
+        if platform.system() == "Windows":
+            # Windows 需要使用绝对路径和正斜杆
+            import os
+            abs_path = os.path.abspath(output_path)
+            webbrowser.open(f"file:///{abs_path.replace(os.sep, '/')}")
+        else:
+            webbrowser.open(f"file://{output_path}")
+        print("[OK] Opened in browser")
 
 
 def generate_interactive_html(data: Dict[str, Any]) -> str:
